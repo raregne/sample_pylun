@@ -5,6 +5,12 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
 
+war {
+	baseName = 'pylun.api'
+	version = '0.0.1-SNAPSHOT'
+	enabled = true
+}
+
 dependencies {
 	compile project(":core")
 //
