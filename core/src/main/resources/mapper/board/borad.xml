@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pylun.board.dao.BoardDAO">
+
+    <insert id="insertBoard" parameterType="com.pylun.board.model.Board" useGeneratedKeys="true"
+            keyProperty="borIdx">
+        INSERT INTO board
+        (
+            bor_idx,
+            bor_del_flag,
+            bor_state,
+            bor_subject,
+            bor_content,
+            bor_parent_idx,
+            bor_category
+        )
+        VALUES
+        (
+            #{borIdx},
+            #{borDelFlag},
+            #{borState},
+            #{borSubject},
+            #{borContent},
+            #{borParentIdx},
+            #{borCategory}
+        )
+    </insert>
+
+    <select id="getBoard" parameterType="com.pylun.board.model.BoardParam" resultType="com.pylun.board.model.Board">
+        SELECT bor_idx,
+            bor_del_flag,
+            bor_insert_date,
+            bor_update_date,
+            bor_delete_date,
+            bor_state,
+            bor_subject,
+            bor_content,
+            bor_parent_idx,
+            bor_category
+        FROM board
+        WHERE bor_idx = #{borIdx}
+    </select>
+
+    <select id="listBoardTotalCount" parameterType="com.pylun.board.model.BoardParam" resultType="long">
+        SELECT COUNT(1) totalCount
+        FROM board
+        WHERE bor_state = #{borState}
+    </select>
+
+    <select id="listBoard" parameterType="com.pylun.board.model.BoardParam" resultType="com.pylun.board.model.Board">
+        SELECT bor_idx,
+            bor_del_flag,
+            bor_insert_date,
+            bor_update_date,
+            bor_delete_date,
+            bor_state,
+            bor_subject,
+            bor_content,
+            bor_parent_idx,
+            bor_category
+        FROM board
+        WHERE bor_state = #{borState}
+    </select>
+
+    <update id="updateBoard" parameterType="com.pylun.board.model.Board">
+        UPDATE board
+        SET
+            bor_del_flag = #{bor_del_flag},
+            bor_insert_date = #{bor_insert_date},
+            bor_update_date = #{bor_update_date},
+            bor_delete_date = #{bor_delete_date},
+            bor_state = #{bor_state},
+            bor_subject = #{bor_subject},
+            bor_content = #{bor_content},
+            bor_parent_idx = #{bor_parent_idx},
+            bor_category = #{bor_category}
+        WHERE bor_idx = #{borIdx}
+    </update>
+
+
+    <insert id="insertBoardLog" parameterType="com.pylun.board.model.BoardLog" useGeneratedKeys="true"
+            keyProperty="borlIdx">
+        INSERT INTO board_log
+        (
+            borl_idx,
+            borl_del_flag,
+            borl_insert_date,
+            borl_update_date,
+            borl_delete_date,
+            borl_act,
+            borl_user_idx,
+            borl_referer_type,
+            borl_referer_idx
+        )
+        VALUES
+        (
+            #{borlIdx},
+            #{borlDelFlag},
+            #{borlInsertDate},
+            #{borlUpdateDate},
+            #{borlDeleteDate},
+            #{borlAct},
+            #{borlUserIdx},
+            #{borlRefererType},
+            #{borlRefererIdx}
+        )
+    </insert>
+
+    <select id="getBoardLog" parameterType="com.pylun.board.model.BoardParam" resultType="com.pylun.board.model.BoardLog">
+        SELECT
+            borl_idx,
+            borl_del_flag,
+            borl_insert_date,
+            borl_update_date,
+            borl_delete_date,
+            borl_act,
+            borl_user_idx,
+            borl_referer_type,
+            borl_referer_idx
+        FROM board_log
+        WHERE borl_idx = #{borlIdx}
+    </select>
+
+    <select id="getBoardEx" parameterType="com.pylun.board.model.BoardParam" resultType="com.pylun.board.model.BoardEx">
+        SELECT bor.bor_idx,
+            bor.bor_del_flag,
+            bor.bor_insert_date,
+            bor.bor_update_date,
+            bor.bor_delete_date,
+            bor.bor_state,
+            bor.bor_subject,
+            bor.bor_content,
+            bor.bor_parent_idx,
+            bor.bor_category
+        FROM board bor
+            INNER JOIN board_log borl ON bor.bor_idx = borl.borl_referer_idx AND borl.borl_referer_type = 'board'
+        WHERE bor.bor_idx = #{borIdx}
+    </select>
+
+
+    <select id="listBoardEx" parameterType="com.pylun.board.model.BoardParam" resultType="com.pylun.board.model.BoardEx">
+        SELECT bor.bor_idx,
+            bor.bor_del_flag,
+            bor.bor_insert_date,
+            bor.bor_update_date,
+            bor.bor_delete_date,
+            bor.bor_state,
+            bor.bor_subject,
+            bor.bor_content,
+            bor.bor_parent_idx,
+            bor.bor_category
+        FROM board bor
+            INNER JOIN board_log borl ON bor.bor_idx = borl.borl_referer_idx AND borl.borl_referer_type = 'board'
+        WHERE bor.bor_state = #{borState}
+    </select>
+</mapper>
