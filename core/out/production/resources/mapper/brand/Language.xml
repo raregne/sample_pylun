@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pylun.brand.dao.LanguageDAO">
+
+    <insert id="insertLanguage" parameterType="com.pylun.brand.model.Language" useGeneratedKeys="true"
+            keyProperty="languageIdx">
+        INSERT INTO language
+        (
+            language_idx,
+            brand_idx,
+            language_code,
+            brand_name
+        )
+        VALUES
+        (
+            ${languageIdx},
+            ${brandIdx},
+            ${languageCode},
+            ${brandName}
+        )
+    </insert>
+
+    <select id="getLanguage" parameterType="long" resultType="com.pylun.brand.model.Language">
+        SELECT
+            language_idx,
+            brand_idx,
+            language_code,
+            brand_name
+        FROM language
+        WHERE language_idx = #{languageIdx}
+    </select>
+
+    <!--select id="getSourcingProductList" parameterType="long" resultType="kr.co.abitree.sample.model.SourcingProduct">
+        SELECT
+            sourcing_product_idx,
+            product_name,
+            category,
+            product_count,
+            sourcing_company_idx
+        FROM language
+        WHERE sourcing_company_idx = #{sourcingCompanyIdx}
+    </select>
+
+    <update id="editSourcingProductByProductCount" parameterType="kr.co.abitree.sample.model.SourcingProduct">
+        UPDATE sourcing_company
+        SET product_count = (SELECT COUNT(1)
+                             FROM sourcing_product X
+                             WHERE X.sourcing_company_idx = #{sourcingCompanyIdx})
+        WHERE sourcing_company_idx = #{sourcingCompanyIdx}
+    </update>
+
+    <update id="editSourcingProduct" parameterType="kr.co.abitree.sample.model.SourcingProduct">
+        UPDATE sourcing_product
+        SET product_count = 9
+        WHERE sourcing_product_idx = #{sourcingProductIdx}
+    </update-->
+
+</mapper>

@@ -9,6 +9,9 @@ war {
 	baseName = 'pylun.api'
 	version = '0.0.1-SNAPSHOT'
 	enabled = true
+	manifest {
+		attributes 'Main-Class': 'WEB-INF/com.pylun.ServiceApplication'
+	}
 }
 
 dependencies {

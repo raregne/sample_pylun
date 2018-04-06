@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pylun.member.dao.UserDAO">
+
+    <insert id="insertUser" parameterType="com.pylun.member.model.User" useGeneratedKeys="true"
+            keyProperty="uIdx">
+        INSERT INTO user
+        (
+            com_idx,
+            u_id,
+            u_password,
+            u_name,
+            u_type
+        )
+        VALUES
+        (
+            #{comIdx},
+            #{uId},
+            #{uPassword},
+            #{uName},
+            #{uType}
+        )
+
+    </insert>
+
+    <select id="getUser" parameterType="com.pylun.member.model.User" resultType="com.pylun.member.model.User">
+        SELECT
+            u_idx,
+            com_idx,
+            u_id,
+            u_password,
+            u_name,
+            u_type
+        FROM user
+        WHERE u_idx = #{uIdx}
+    </select>
+
+    <select id="findByUsername" parameterType="string" resultType="com.pylun.member.model.User">
+        SELECT
+            u_idx,
+            com_idx,
+            u_id,
+            u_password,
+            u_name,
+            u_type
+        FROM user
+        WHERE u_id = #{uId}
+    </select>
+
+    <update id="updateUser" parameterType="com.pylun.member.model.User">
+        UPDATE user
+        SET
+            com_idx = #{comIdx},
+            u_password = #{uPassword},
+            u_name = #{uName},
+            u_type = #{uType}
+        WHERE u_idx = #{uIdx}
+    </update>
+
+
+</mapper>

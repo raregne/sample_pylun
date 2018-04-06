@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pylun.brand.dao.BrandDAO">
+
+    <insert id="insertBrand" parameterType="com.pylun.brand.model.Brand" useGeneratedKeys="true"
+            keyProperty="brandIdx">
+        INSERT INTO brand
+        (
+            rate
+        )
+        VALUES
+        (
+            #{rate}
+        )
+    </insert>
+
+    <select id="getBrand" parameterType="com.pylun.brand.model.BrandParam" resultType="com.pylun.brand.model.Brand">
+        SELECT
+            brand_idx,
+            rate
+        FROM brand
+        WHERE brand_idx = #{brandIdx}
+    </select>
+
+    <select id="listBrand" parameterType="com.pylun.brand.model.BrandParam" resultType="com.pylun.brand.model.Brand">
+        SELECT
+            brand_idx,
+            rate
+        FROM brand
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <update id="updateBrand" parameterType="com.pylun.brand.model.Brand">
+        UPDATE brand
+        SET
+            rate = #{rate}
+        WHERE brand_idx = #{brandIdx}
+    </update>
+
+
+</mapper>

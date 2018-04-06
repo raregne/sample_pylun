@@ -1,0 +1,75 @@
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  profiles: default
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  security:
+    user:
+      name: user
+      password: passwd
+      roles: USER
+#spring.jpa.hibernate.ddl-auto에 대해 간략히 옵션값을 확인해보도록 하자
+# create  : 기존테이블 삭제 후 다시 생성
+# create-drop: create와 같으나 종료시점에 테이블 DROP
+# update: 변경분만 반영
+# validate: 엔티티와 테이블이 정상 매핑되었는지만 확인
+# none: 사용하지 않음
+# 출처: http://cpdev.tistory.com/25 [하루하나]
+#  jpa:
+#    database: mysql
+#    hibernate:
+#      ddl-auto: none
+#    show-sql: true
+#    generate-ddl: true
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://abitreedb.cze6qhvun9td.ap-northeast-1.rds.amazonaws.com:3306/abitree?autoReconnect=true&useSSL=false
+#    url: jdbc:mysql://192.168.1.2:3306/agne
+#    username: abitree
+#    password: Abitree0
+#    hikari:
+#      maximum-pool-size: 2
+#      minimum-idle: 1
+  master:
+    datasource:
+      type: com.zaxxer.hikari.HikariDataSource
+      driverClassName: com.mysql.jdbc.Driver
+      jdbcUrl: jdbc:mysql://abitree.cze6qhvun9td.ap-northeast-1.rds.amazonaws.com:3306/abitree?autoReconnect=true&useSSL=false
+#      url: jdbc:mysql://abitreedb.cze6qhvun9td.ap-northeast-1.rds.amazonaws.com:3306/abitree?autoReconnect=true&useSSL=false
+      username: abitree
+      password: Abitree0
+      testOnBorrow: true
+      validationInterval: 34000
+      validationQuery: SELECT 1
+      maximum-pool-size: 2
+      minimum-idle: 1
+  slave:
+    datasource:
+      type: com.zaxxer.hikari.HikariDataSource
+      driverClassName: com.mysql.jdbc.Driver
+      jdbcUrl: jdbc:mysql://abitree.cze6qhvun9td.ap-northeast-1.rds.amazonaws.com:3306/abitree_read?autoReconnect=true&useSSL=false
+#      url: jdbc:mysql://abitreedb.cze6qhvun9td.ap-northeast-1.rds.amazonaws.com:3306/abitree?autoReconnect=true&useSSL=false
+      username: abitree
+      password: Abitree0
+      testOnBorrow: true
+      validationInterval: 34000
+      validationQuery: SELECT 1
+      maximum-pool-size: 2
+      minimum-idle: 1
+      read-only: true
+
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  check-config-location: true
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: classpath*:com/pylun/**/model/*.class
+  type-handlers-package: com.example.common.mybatis.typehandler.time
+
